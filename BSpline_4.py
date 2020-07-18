@@ -26,7 +26,6 @@ def BSpline(Points, order, Knots, T):
     countPoints = np.size(Points, 0)
     n = countPoints - 1
     dimension = np.size(Points, 1)
-    degree = order - 1
     rVal = []
     for t in T:
         point = np.zeros(dimension)
@@ -36,12 +35,23 @@ def BSpline(Points, order, Knots, T):
     return np.array(rVal)
 
 if __name__ == "__main__":
-    Points = np.array([[0., 0.], [1., -1.], [2., 0.], [3., -1.]])
-    Knots = np.array([0, 0, 0, 0.5, 1, 1, 1, 1])
+    Points = np.array([[0., 0.], [2., 6.], [4., 3.], [6., 6.], [8., 6.]])
+    KnotsA = np.array([0, 0, 0, 0.33, 0.66, 1, 1, 1])
+    KnotsB = np.array([0, 0, 0, 0.33, 0.33, 1, 1, 1])
     T = np.arange(0.01, 1.0, 0.01)
 
-    R = BSpline(Points, 3, Knots, T)
+    PointsBox = np.array([[0, 0], [2, 0], [4, 0], [4, 2], [4, 4], [2, 4], [0, 4], [0, 2], [0, 0], [2, 0], [4, 0]])
+    KnotsBox = np.arange(0, 15, 1) / 14
+
+    RBox = BSpline(PointsBox, 4, KnotsBox, T)
+
+    RA = BSpline(Points, 3, KnotsA, T)
+    RB = BSpline(Points, 3, KnotsB, T)
 
     plt.plot(Points[:, 0], Points[:, 1])
-    plt.plot(R[:, 0], R[:, 1])
+    plt.plot(RA[:, 0], RA[:, 1])
+    plt.plot(RB[:, 0], RB[:, 1])
+
+    #plt.plot(PointsBox[:, 0], PointsBox[:, 1])
+    plt.plot(RBox[:, 0], RBox[:, 1])
     plt.show()
