@@ -22,7 +22,7 @@ def CoxDeBoorRecursion(i, order, Knots, t):
         return first + second
 
 
-def BSpline(Points, order, Knots, T):
+def BSpline(Points, Order, Knots, T):
     countPoints = np.size(Points, 0)
     n = countPoints - 1
     dimension = np.size(Points, 1)
@@ -30,13 +30,31 @@ def BSpline(Points, order, Knots, T):
     for t in T:
         point = np.zeros(dimension)
         for i in range(0, n+1):
-            point += Points[i] * CoxDeBoorRecursion(i, order, Knots, t)
+            point += Points[i] * CoxDeBoorRecursion(i, Order, Knots, t)
         rVal.append(point)
     return np.array(rVal)
 
+def OpenUniformKnotVector(Order, Points, Normalize):
+    nPlusOne = np.size(Points, 0)
+    n = nPlusOne - 1
+    countKnots = nPlusOne + Order
+    knots = np.zeros(countKnots)
+    for i in range(countKnots):
+        if 0 <= i and i < Order:
+            knots[i] = 0.
+        elif Order <= i and i <= n:
+            knots[i] = i + 1 - Order
+        else:
+            knots[i] = n - Order + 2
+
+    if Normalize:
+        knots /= np.max(knots)
+    return knots
+
 if __name__ == "__main__":
     Points = np.array([[1., 1.], [2., 6.], [4., 3.], [6., 6.], [8., 6.]])
-    KnotsA = np.array([0, 0, 0, 0.33, 0.66, 1, 1, 1])
+    #KnotsA = np.array([0, 0, 0, 0.33, 0.66, 1, 1, 1])
+    KnotsA = OpenUniformKnotVector(3, Points, True)
     KnotsB = np.array([0, 0, 0, 0.33, 0.33, 1, 1, 1])
     T = np.arange(0.01, 1.0, 0.01)
 
