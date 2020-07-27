@@ -66,10 +66,13 @@ def ConvexHull(Points):
 if __name__ == "__main__":
     #shows that the b spline curve fits in the convex hull of the control points
     Points = np.array([[1., 1.], [2., 4.], [2., 6.], [4., 3.], [6., 6.], [8., 6.]])
-    Knots = OpenUniformKnotVector(3, Points, True)
+
+    Order = 3
+
+    Knots = OpenUniformKnotVector(Order, Points, True)
     T = np.arange(0, 1.0, 0.01)
 
-    Spline = BSpline(Points, 3, Knots, T)
+    Spline = BSpline(Points, Order, Knots, T)
 
     Hull = ConvexHull(Points)
 
