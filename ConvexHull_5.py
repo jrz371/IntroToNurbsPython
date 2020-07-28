@@ -46,13 +46,8 @@ def ConvexHull(Points):
     #sort by angle so it plots nicely
     center = np.average(Hull)
 
-    angles = []
-
-    for point in Hull:
-        to = point - center
-        angles.append(np.arctan2(to[0], to[1]))
-
-    angles = np.asarray(angles)
+    to = Hull - center
+    angles = np.arctan2(to[:, 0], to[:, 1])
 
     anglesSort = np.argsort(angles)
 
