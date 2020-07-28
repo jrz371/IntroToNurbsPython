@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from BSpline_4 import *
+from BSpline_4 import BSpline, OpenUniformKnotVector
 import math
 
 def FindSide(P1, P2, P):

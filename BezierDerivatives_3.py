@@ -35,6 +35,17 @@ def BezierSecondDerivative(Points, T):
         rVal.append(evaluatedPoint)
     return np.array(rVal)
 
+def BezierTangent(Points, T):
+    deriv = BezierFirstDerivative(Points, [T])
+    point = MatrixBezier(Points, [T])
+    norm = deriv / np.linalg.norm(deriv)
+    points = []
+    points.append(point + norm)
+    points.append(point - norm)
+    points = np.asarray(points)
+    points = points.reshape([2, 2])
+    return points
+
 if __name__ == "__main__":
     Points = np.array([[1., 1.], [2., 3.], [4., 3.], [3., 1.]])
     T = np.arange(0, 1, 0.01)
@@ -44,9 +55,12 @@ if __name__ == "__main__":
     R_deriv = BezierFirstDerivative(Points, T)
     R_deriv2 = BezierSecondDerivative(Points, T)
 
+    Tangent = BezierTangent(Points, 0.35)
+
     plt.plot(R_deriv[:, 0], R_deriv[:, 1])
     plt.plot(R_deriv2[:, 0], R_deriv2[:, 1])
     plt.plot(Points[:, 0], Points[:, 1])
+    plt.plot(Tangent[:, 0], Tangent[:, 1])
     plt.plot(R[:, 0], R[:, 1])
     plt.xlim(-15, 15)
     plt.ylim(-15, 15)
