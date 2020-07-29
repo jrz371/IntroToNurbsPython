@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from Bezier_1 import Combination
+from Bezier import Combination
 
 def CoefficentsMatrix(n):
     countPoints = n + 1

@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from BezierMatrix_2 import MatrixBezier
-from Bezier_1 import BernsteinBasis
+from BezierMatrix import MatrixBezier
+from Bezier import BernsteinBasis
 
 def BernsteinFirstDerivative(n, i ,t):
     return (i - n * t) / (t * (1. - t)) * BernsteinBasis(n, i, t)
