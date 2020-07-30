@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-from KnotVectors import OpenUniformKnotVector
+from KnotVectors import OpenUniformKnotVector, PeriodicKnotVector
 
 def CoxDeBoorRecursion(i, order, Knots, t):
     if order == 1:
@@ -41,8 +41,7 @@ if __name__ == "__main__":
     
     plt.show()
 
-    Knots = np.arange(0., Order + CountPoints, 1.)
-    Knots /= np.max(Knots)
+    Knots = PeriodicKnotVector(Order, CountPoints, True)
 
     for i in range(CountPoints):
         plt.plot(BasisGraph(Knots, Order, i, T))

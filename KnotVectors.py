@@ -17,3 +17,9 @@ def OpenUniformKnotVector(Order, Points, Normalize):
     if Normalize:
         knots /= np.max(knots)
     return knots
+
+def PeriodicKnotVector(Order, CountPoints, Normalize):
+    values = np.arange(0., CountPoints + Order, 1.)
+    if Normalize:
+        values /= np.max(values)
+    return values
