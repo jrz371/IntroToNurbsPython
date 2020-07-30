@@ -22,29 +22,29 @@ def CoxDeBoorRecursion(i, order, Knots, t):
 
         return first + second
 
-def BasisGraph(Knots, Order, i, T):
+def BasisGraph(Knots, order, i, T):
     values = []
     for t in T:
-        values.append(CoxDeBoorRecursion(i, Order, Knots, t))
+        values.append(CoxDeBoorRecursion(i, order, Knots, t))
     return np.asarray(values)
 
 
 if __name__ == "__main__":
-    Order = 3
-    CountPoints = 4
-    Knots = OpenUniformKnotVector(Order, np.zeros([CountPoints, 2]), True)
+    order = 3
+    countPoints = 4
+    Knots = OpenUniformKnotVector(order, countPoints, True)
 
     T = np.arange(0., 1.0, 0.01)
 
-    for i in range(CountPoints):
-        plt.plot(BasisGraph(Knots, Order, i, T))
+    for i in range(countPoints):
+        plt.plot(BasisGraph(Knots, order, i, T))
     
     plt.show()
 
-    Knots = PeriodicKnotVector(Order, CountPoints, True)
+    Knots = PeriodicKnotVector(order, countPoints, True)
 
-    for i in range(CountPoints):
-        plt.plot(BasisGraph(Knots, Order, i, T))
+    for i in range(countPoints):
+        plt.plot(BasisGraph(Knots, order, i, T))
     
     plt.show()
 

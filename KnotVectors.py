@@ -1,25 +1,24 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def OpenUniformKnotVector(Order, Points, Normalize):
-    nPlusOne = np.size(Points, 0)
-    n = nPlusOne - 1
-    countKnots = nPlusOne + Order
-    knots = np.zeros(countKnots)
+def OpenUniformKnotVector(order, countPoints, normalize):
+    n = countPoints - 1
+    countKnots = countPoints + order
+    Knots = np.zeros(countKnots)
     for i in range(countKnots):
-        if 0 <= i and i < Order:
-            knots[i] = 0.
-        elif Order <= i and i <= n:
-            knots[i] = i + 1 - Order
+        if 0 <= i and i < order:
+            Knots[i] = 0.
+        elif order <= i and i <= n:
+            Knots[i] = i + 1 - order
         else:
-            knots[i] = n - Order + 2
+            Knots[i] = n - order + 2
 
-    if Normalize:
-        knots /= np.max(knots)
-    return knots
+    if normalize:
+        Knots /= np.max(Knots)
+    return Knots
 
-def PeriodicKnotVector(Order, CountPoints, Normalize):
-    values = np.arange(0., CountPoints + Order, 1.)
-    if Normalize:
-        values /= np.max(values)
-    return values
+def PeriodicKnotVector(order, countPoints, normalize):
+    Knots = np.arange(0., countPoints + order, 1.)
+    if normalize:
+        Knots /= np.max(Knots)
+    return Knots

@@ -11,13 +11,13 @@ def FindSide(P1, P2, P):
 def LineDist(P1, P2, P):
     return abs((P[1] - P1[1]) * (P2[0] - P1[0]) - (P2[1] - P1[1]) * (P[0] - P1[0]))
 
-def QuickHull(Points, n, P1, P2, Side, Hull):
+def QuickHull(Points, n, P1, P2, side, Hull):
     index = -1
     max_dist = 0
 
     for i in range(0, n):
         temp = LineDist(P1, P2, Points[i, :])
-        if(FindSide(P1, P2, Points[i, :]) == Side and temp > max_dist):
+        if(FindSide(P1, P2, Points[i, :]) == side and temp > max_dist):
             index = i
             max_dist = temp
 
@@ -44,14 +44,14 @@ def ConvexHull(Points):
     Hull = np.unique(Hull, axis=0)
 
     #sort by angle so it plots nicely
-    center = np.average(Hull)
+    Center = np.average(Hull)
 
-    to = Hull - center
-    angles = np.arctan2(to[:, 0], to[:, 1])
+    ToCenter = Hull - Center
+    Angles = np.arctan2(ToCenter[:, 0], ToCenter[:, 1])
 
-    anglesSort = np.argsort(angles)
+    SortedAngles = np.argsort(Angles)
 
-    Hull = np.array(Hull)[anglesSort]
+    Hull = np.array(Hull)[SortedAngles]
 
     #copy first element so it loops on itself in plot
     Hull = np.append(Hull, [Hull[0, :]], axis=0)
@@ -61,13 +61,13 @@ def ConvexHull(Points):
 if __name__ == "__main__":
     #shows that the b spline curve fits in the convex hull of the control points
     Points = np.array([[1., 1.], [2., 4.], [2., 6.], [4., 3.], [6., 6.], [8., 6.]])
+    countPoints = np.size(Points, 0)
+    order = 3
 
-    Order = 3
-
-    Knots = OpenUniformKnotVector(Order, Points, True)
+    Knots = OpenUniformKnotVector(order, countPoints, True)
     T = np.arange(0, 1.0, 0.01)
 
-    Spline = BSpline(Points, Order, Knots, T)
+    Spline = BSpline(Points, order, Knots, T)
 
     Hull = ConvexHull(Points)
 
