@@ -28,23 +28,37 @@ def BasisMatrix(order):
             Mat[i, j] = ki * BasisSum(i, j , order)
     return Mat
 
+# 0.0 <= T < 1.0
+def PeriodicBSplineMatrix(Points, order, T):
+    TMat = TMatrix(T, order)
+    Basis = BasisMatrix(order)
+    dimension = np.size(Points, 1)
+
+    RFinal = np.empty([0, dimension])
+
+    #have to iterate over each segment of the curve
+    for i in range(0, countPoints - order + 1):
+        RSegment = np.dot(np.dot(TMat, Basis), Points[i:i+order, :])
+        RFinal = np.append(RFinal, RSegment, axis=0)
+    
+    return RFinal
+
 if __name__ == "__main__":
-    order = 4
+    order = 3
 
     Points = np.array([[0., 0.], [3., 10.], [6., 3.], [10., 5.]])
     countPoints = np.size(Points, 0)
 
     T = np.arange(0.0, 1.0, 0.01)
 
-    TMat = TMatrix(T, order)
-
-    Basis = BasisMatrix(order)
+    R = PeriodicBSplineMatrix(Points, order, T)
 
     plt.plot(Points[:, 0], Points[:, 1])
+    plt.plot(R[:, 0], R[:, 1])
 
-    #have to iterate over each segment of the curve
-    for i in range(0, countPoints - order + 1):
-        RSegment = np.dot(np.dot(TMat, Basis), Points[i:i+order, :])
-        plt.plot(RSegment[:, 0], RSegment[:, 1])
+    #usable parameter range 2 <= T <= 4 when order = 3
+    TConfirm = np.arange(2, 4, 0.01)
+    RConfirm = BSpline(Points + [1, 1], order, PeriodicKnotVector(order, countPoints, False), TConfirm)
+    plt.plot(RConfirm[:, 0], RConfirm[:, 1])
 
     plt.show()
