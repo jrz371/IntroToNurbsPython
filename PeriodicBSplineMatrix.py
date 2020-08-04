@@ -29,36 +29,51 @@ def BasisMatrix(order):
     return Mat
 
 # 0.0 <= T < 1.0
-def PeriodicBSplineMatrix(Points, order, T):
+def PeriodicBSplineMatrix(Points, order, T, closed=False):
     TMat = TMatrix(T, order)
     Basis = BasisMatrix(order)
+    countPoints = np.size(Points, 0)
     dimension = np.size(Points, 1)
+
+    orderSubTwo = order - 1
+
+    totalPoints = countPoints + orderSubTwo * 2
+
+    PointsMatrix = np.zeros([totalPoints, dimension])
+    PointsMatrix[orderSubTwo:orderSubTwo + countPoints, :] = Points
+
+    if closed:
+        PointsMatrix[0:orderSubTwo] = Points[-orderSubTwo:, :]
+        PointsMatrix[orderSubTwo + countPoints:, :] = Points[:orderSubTwo, :]
+    else:
+        PointsMatrix[0:orderSubTwo] = Points[0, :]
+        PointsMatrix[orderSubTwo + countPoints:, :] = Points[-1, :]
 
     RFinal = np.empty([0, dimension])
 
     #have to iterate over each segment of the curve
-    for i in range(0, countPoints - order + 1):
-        RSegment = np.dot(np.dot(TMat, Basis), Points[i:i+order, :])
+    for i in range(0, totalPoints - order + 1):
+        RSegment = np.dot(np.dot(TMat, Basis), PointsMatrix[i:i+order, :])
         RFinal = np.append(RFinal, RSegment, axis=0)
     
     return RFinal
 
 if __name__ == "__main__":
-    order = 3
+    order = 4
 
     Points = np.array([[0., 0.], [3., 10.], [6., 3.], [10., 5.]])
     countPoints = np.size(Points, 0)
 
     T = np.arange(0.0, 1.0, 0.01)
 
-    R = PeriodicBSplineMatrix(Points, order, T)
+    R = PeriodicBSplineMatrix(Points, order, T, False)
 
     plt.plot(Points[:, 0], Points[:, 1])
     plt.plot(R[:, 0], R[:, 1])
 
-    #usable parameter range 2 <= T <= 4 when order = 3
-    TConfirm = np.arange(2, 4, 0.01)
-    RConfirm = BSpline(Points + [1, 1], order, PeriodicKnotVector(order, countPoints, False), TConfirm)
-    plt.plot(RConfirm[:, 0], RConfirm[:, 1])
+    PointsBox = np.array([[2, 0], [4, 0], [4, 2], [4, 4], [2, 4], [0, 4], [0, 2], [0, 0]])
+
+    RBox = PeriodicBSplineMatrix(PointsBox, order, T, True)
+    plt.plot(RBox[:, 0], RBox[:, 1])
 
     plt.show()
