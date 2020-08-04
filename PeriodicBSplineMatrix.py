@@ -35,7 +35,7 @@ def PeriodicBSplineMatrix(Points, order, T, closed=False):
     countPoints = np.size(Points, 0)
     dimension = np.size(Points, 1)
 
-    orderSubTwo = order - 1
+    orderSubTwo = order - 2 #k - 1 repeated/looped, subtract 2 since first vertex already there
 
     totalPoints = countPoints + orderSubTwo * 2
 
@@ -59,7 +59,7 @@ def PeriodicBSplineMatrix(Points, order, T, closed=False):
     return RFinal
 
 if __name__ == "__main__":
-    order = 4
+    order = 3
 
     Points = np.array([[0., 0.], [3., 10.], [6., 3.], [10., 5.]])
     countPoints = np.size(Points, 0)
