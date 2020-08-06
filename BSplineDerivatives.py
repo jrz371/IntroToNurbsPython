@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import math
 from BSplineBasis import CoxDeBoorRecursion, BasisGraph
 from KnotVectors import OpenUniformKnotVector
+from BSpline import BSpline
 
 def CoxDeBoorFirstDerivative(i, order, Knots, t):
     if order == 1:
@@ -42,17 +43,41 @@ def CoxDeBoorSecondDerivative(i, order, Knots, t):
 
         return first + second
 
-def FirstDerivativeGraph(Knots, order, i, T):
+def BasisFirstDerivativeGraph(Knots, order, i, T):
     values = []
     for t in T:
         values.append(CoxDeBoorFirstDerivative(i, order, Knots, t))
     return np.asarray(values)
 
-def SecondDerivativeGraph(Knots, order, i, T):
+def BasisSecondDerivativeGraph(Knots, order, i, T):
     values = []
     for t in T:
         values.append(CoxDeBoorSecondDerivative(i, order, Knots, t))
     return np.asarray(values)
+
+def BSplineFirstDerivative(Points, order, Knots, T):
+    countPoints = np.size(Points, 0)
+    n = countPoints - 1
+    dimension = np.size(Points, 1)
+    rVal = []
+    for t in T:
+        point = np.zeros(dimension)
+        for i in range(0, n+1):
+            point += Points[i] * CoxDeBoorFirstDerivative(i, order, Knots, t)
+        rVal.append(point)
+    return np.array(rVal)
+
+def BSplineSecondDerivative(Points, order, Knots, T):
+    countPoints = np.size(Points, 0)
+    n = countPoints - 1
+    dimension = np.size(Points, 1)
+    rVal = []
+    for t in T:
+        point = np.zeros(dimension)
+        for i in range(0, n+1):
+            point += Points[i] * CoxDeBoorSecondDerivative(i, order, Knots, t)
+        rVal.append(point)
+    return np.array(rVal)
 
 if __name__ == "__main__":
     order = 4
@@ -69,11 +94,27 @@ if __name__ == "__main__":
     plt.show()
 
     for i in range(countPoints):
-        plt.plot(T, FirstDerivativeGraph(Knots, order, i, T))
+        plt.plot(T, BasisFirstDerivativeGraph(Knots, order, i, T))
 
     plt.show()
 
     for i in range(countPoints):
-        plt.plot(T, SecondDerivativeGraph(Knots, order, i, T))
+        plt.plot(T, BasisSecondDerivativeGraph(Knots, order, i, T))
+
+    plt.show()
+
+    BoxOrder = 3
+    BoxPoints = np.array([[2, 0], [4, 0], [4, 2], [4, 4], [2, 4], [0, 4], [0, 2], [0, 0], [2, 0]])
+    BoxKnots = OpenUniformKnotVector(BoxOrder, np.size(BoxPoints, 0), True)
+    BoxT = np.arange(0., 1., 0.01)
+
+    Box = BSpline(BoxPoints, BoxOrder, BoxKnots, BoxT)
+    BoxFirstDerivative = BSplineFirstDerivative(BoxPoints, BoxOrder, BoxKnots, BoxT)
+    BoxSecondDerivative = BSplineSecondDerivative(BoxPoints, BoxOrder, BoxKnots, BoxT)
+
+    plt.plot(BoxPoints[:, 0], BoxPoints[:, 1])
+    plt.plot(Box[:, 0], Box[:, 1])
+    plt.plot(BoxFirstDerivative[:, 0], BoxFirstDerivative[:, 1])
+    plt.plot(BoxSecondDerivative[:, 0], BoxSecondDerivative[:, 1])
 
     plt.show()
