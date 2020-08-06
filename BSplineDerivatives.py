@@ -25,7 +25,7 @@ def CoxDeBoorFirstDerivative(i, order, Knots, t):
         return first + second
 
 def CoxDeBoorSecondDerivative(i, order, Knots, t):
-    if order < 2:
+    if order <= 2:
         return 0.
     else:
         ftt = 2 * CoxDeBoorFirstDerivative(i, order - 1, Knots, t) + (t - Knots[i]) * CoxDeBoorSecondDerivative(i, order - 1, Knots, t)
