@@ -28,7 +28,7 @@ def BasisMatrix(order):
             Mat[i, j] = ki * BasisSum(i, j , order)
     return Mat
 
-# 0.0 <= T < 1.0
+# 0.0 <= T < 1.0, evaluated for each segment
 def PeriodicBSplineMatrix(Points, order, T, closed=False):
     TMat = TMatrix(T, order)
     Basis = BasisMatrix(order)
