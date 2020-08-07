@@ -79,6 +79,16 @@ def BSplineSecondDerivative(Points, order, Knots, T):
         rVal.append(point)
     return np.array(rVal)
 
+def BSplineTangent(Points, order, Knots, t):
+    deriv = BSplineFirstDerivative(Points, order, Knots, [t])[0]
+    point = BSpline(Points, order, Knots, [t])[0]
+    norm = deriv / np.linalg.norm(deriv)
+    points = []
+    points.append(point + norm)
+    points.append(point - norm)
+    points = np.asarray(points)
+    return points
+
 if __name__ == "__main__":
     order = 4
     countPoints = 6
@@ -116,5 +126,12 @@ if __name__ == "__main__":
     plt.plot(Box[:, 0], Box[:, 1])
     plt.plot(BoxFirstDerivative[:, 0], BoxFirstDerivative[:, 1])
     plt.plot(BoxSecondDerivative[:, 0], BoxSecondDerivative[:, 1])
+
+    plt.show()
+
+    BoxTangent = BSplineTangent(BoxPoints, BoxOrder, BoxKnots, 0.4)
+    plt.plot(BoxPoints[:, 0], BoxPoints[:, 1])
+    plt.plot(Box[:, 0], Box[:, 1])
+    plt.plot(BoxTangent[:, 0], BoxTangent[:, 1])
 
     plt.show()

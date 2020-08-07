@@ -35,15 +35,14 @@ def BezierSecondDerivative(Points, T):
         rVal.append(evaluatedPoint)
     return np.array(rVal)
 
-def BezierTangent(Points, T):
-    deriv = BezierFirstDerivative(Points, [T])
-    point = MatrixBezier(Points, [T])
+def BezierTangent(Points, t):
+    deriv = BezierFirstDerivative(Points, [t])[0]
+    point = MatrixBezier(Points, [t])[0]
     norm = deriv / np.linalg.norm(deriv)
     points = []
     points.append(point + norm)
     points.append(point - norm)
     points = np.asarray(points)
-    points = points.reshape([2, 2])
     return points
 
 if __name__ == "__main__":
