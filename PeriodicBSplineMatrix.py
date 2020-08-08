@@ -49,14 +49,14 @@ def PeriodicBSplineMatrix(Points, order, T, closed=False):
         PointsMatrix[0:orderSubTwo] = Points[0, :]
         PointsMatrix[orderSubTwo + countPoints:, :] = Points[-1, :]
 
-    RFinal = np.empty([0, dimension])
+    SplineFinal = np.empty([0, dimension])
 
     #have to iterate over each segment of the curve
     for i in range(0, totalPoints - order + 1):
-        RSegment = np.dot(np.dot(TMat, Basis), PointsMatrix[i:i+order, :])
-        RFinal = np.append(RFinal, RSegment, axis=0)
+        SplineSegment = np.dot(np.dot(TMat, Basis), PointsMatrix[i:i + order, :])
+        SplineFinal = np.append(SplineFinal, SplineSegment, axis=0)
     
-    return RFinal
+    return SplineFinal
 
 if __name__ == "__main__":
     order = 3
