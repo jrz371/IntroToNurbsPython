@@ -29,7 +29,7 @@ def QuickHull(Points, n, P1, P2, side, Hull):
     QuickHull(Points, n, Points[index, :], P1, -FindSide(Points[index, :], P1, P2), Hull)
     QuickHull(Points, n, Points[index, :], P2, -FindSide(Points[index, :], P2, P1), Hull)
 
-def ConvexHull(Points):
+def ConvexHull2D(Points):
     maxX = np.argmax(Points[:, 0])
     minX = np.argmin(Points[:, 0])
     countPoints = np.size(Points, 0)
@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
     Spline = BSpline(Points, order, Knots, T)
 
-    Hull = ConvexHull(Points)
+    Hull = ConvexHull2D(Points)
 
     plt.plot(Points[:, 0], Points[:, 1])
     plt.plot(Hull[:, 0], Hull[:, 1], 'r--')

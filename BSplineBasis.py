@@ -37,14 +37,14 @@ if __name__ == "__main__":
     T = np.arange(0., 1.0, 0.01)
 
     for i in range(countPoints):
-        plt.plot(BasisGraph(Knots, order, i, T))
+        plt.plot(T, BasisGraph(Knots, order, i, T))
     
     plt.show()
 
     Knots = PeriodicKnotVector(order, countPoints, True)
 
     for i in range(countPoints):
-        plt.plot(BasisGraph(Knots, order, i, T))
+        plt.plot(T, BasisGraph(Knots, order, i, T))
     
     plt.show()
 

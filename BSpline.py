@@ -28,15 +28,15 @@ if __name__ == "__main__":
     KnotsBox = np.arange(0, 15, 1)
     BoxT = np.arange(3, 11, 0.01)
 
-    RBox = BSpline(PointsBox, 4, KnotsBox, BoxT)
+    SplineBox = BSpline(PointsBox, 4, KnotsBox, BoxT)
 
-    RA = BSpline(Points, 3, KnotsA, T)
-    RB = BSpline(Points, 3, KnotsB, T)
+    SplineA = BSpline(Points, 3, KnotsA, T)
+    SplineB = BSpline(Points, 3, KnotsB, T)
 
     plt.plot(Points[:, 0], Points[:, 1])
-    plt.plot(RA[:, 0], RA[:, 1])
-    plt.plot(RB[:, 0], RB[:, 1])
+    plt.plot(SplineA[:, 0], SplineA[:, 1])
+    plt.plot(SplineB[:, 0], SplineB[:, 1])
 
-    #plt.plot(PointsBox[:, 0], PointsBox[:, 1])
-    plt.plot(RBox[:, 0], RBox[:, 1])
+    plt.plot(PointsBox[:, 0], PointsBox[:, 1])
+    plt.plot(SplineBox[:, 0], SplineBox[:, 1])
     plt.show()

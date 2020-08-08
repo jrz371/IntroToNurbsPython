@@ -66,14 +66,14 @@ if __name__ == "__main__":
 
     T = np.arange(0.0, 1.0, 0.01)
 
-    R = PeriodicBSplineMatrix(Points, order, T, False)
+    Spline = PeriodicBSplineMatrix(Points, order, T, False)
 
     plt.plot(Points[:, 0], Points[:, 1])
-    plt.plot(R[:, 0], R[:, 1])
+    plt.plot(Spline[:, 0], Spline[:, 1])
 
     PointsBox = np.array([[2, 0], [4, 0], [4, 2], [4, 4], [2, 4], [0, 4], [0, 2], [0, 0]])
 
-    RBox = PeriodicBSplineMatrix(PointsBox, order, T, True)
-    plt.plot(RBox[:, 0], RBox[:, 1])
+    BoxSpline = PeriodicBSplineMatrix(PointsBox, order, T, True)
+    plt.plot(BoxSpline[:, 0], BoxSpline[:, 1])
 
     plt.show()

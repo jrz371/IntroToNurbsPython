@@ -118,12 +118,12 @@ if __name__ == "__main__":
     BoxKnots = OpenUniformKnotVector(BoxOrder, np.size(BoxPoints, 0), True)
     BoxT = np.arange(0., 1., 0.01)
 
-    Box = BSpline(BoxPoints, BoxOrder, BoxKnots, BoxT)
+    BoxSpline = BSpline(BoxPoints, BoxOrder, BoxKnots, BoxT)
     BoxFirstDerivative = BSplineFirstDerivative(BoxPoints, BoxOrder, BoxKnots, BoxT)
     BoxSecondDerivative = BSplineSecondDerivative(BoxPoints, BoxOrder, BoxKnots, BoxT)
 
     plt.plot(BoxPoints[:, 0], BoxPoints[:, 1])
-    plt.plot(Box[:, 0], Box[:, 1])
+    plt.plot(BoxSpline[:, 0], BoxSpline[:, 1])
     plt.plot(BoxFirstDerivative[:, 0], BoxFirstDerivative[:, 1])
     plt.plot(BoxSecondDerivative[:, 0], BoxSecondDerivative[:, 1])
 
@@ -131,7 +131,7 @@ if __name__ == "__main__":
 
     BoxTangent = BSplineTangent(BoxPoints, BoxOrder, BoxKnots, 0.4)
     plt.plot(BoxPoints[:, 0], BoxPoints[:, 1])
-    plt.plot(Box[:, 0], Box[:, 1])
+    plt.plot(BoxSpline[:, 0], BoxSpline[:, 1])
     plt.plot(BoxTangent[:, 0], BoxTangent[:, 1])
 
     plt.show()
