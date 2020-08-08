@@ -49,18 +49,18 @@ if __name__ == "__main__":
     Points = np.array([[1., 1.], [2., 3.], [4., 3.], [3., 1.]])
     T = np.arange(0, 1, 0.01)
 
-    R = MatrixBezier(Points, T)
+    Curve = MatrixBezier(Points, T)
 
-    R_deriv = BezierFirstDerivative(Points, T)
-    R_deriv2 = BezierSecondDerivative(Points, T)
+    Curve_deriv = BezierFirstDerivative(Points, T)
+    Curve_deriv2 = BezierSecondDerivative(Points, T)
 
     Tangent = BezierTangent(Points, 0.35)
 
-    plt.plot(R_deriv[:, 0], R_deriv[:, 1])
-    plt.plot(R_deriv2[:, 0], R_deriv2[:, 1])
+    plt.plot(Curve_deriv[:, 0], Curve_deriv[:, 1])
+    plt.plot(Curve_deriv2[:, 0], Curve_deriv2[:, 1])
     plt.plot(Points[:, 0], Points[:, 1])
     plt.plot(Tangent[:, 0], Tangent[:, 1])
-    plt.plot(R[:, 0], R[:, 1])
+    plt.plot(Curve[:, 0], Curve[:, 1])
     plt.xlim(-15, 15)
     plt.ylim(-15, 15)
     plt.show()

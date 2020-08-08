@@ -27,8 +27,8 @@ if __name__ == "__main__":
     Points = np.array([[0., 0.], [3., 0.], [2., 2.], [1., 1.]]) #hook
     T = np.arange(0, 1, 0.01)
 
-    R = BezierCurve(T, Points)
+    Curve = BezierCurve(T, Points)
 
     plt.plot(Points[:, 0], Points[:, 1])
-    plt.plot(R[:, 0], R[:, 1])
+    plt.plot(Curve[:, 0], Curve[:, 1])
     plt.show()
