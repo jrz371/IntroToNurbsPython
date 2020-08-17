@@ -45,5 +45,6 @@ if __name__ == "__main__":
     
     fig = plt.figure()
     ax = Axes3D(fig)
+    ax.plot_wireframe(Points[:, :, 0], Points[:, :, 1], Points[:, :, 2])
     ax.plot_surface(BezierSrf[0, :, :], BezierSrf[1, :, :], BezierSrf[2, :, :])
     plt.show()
