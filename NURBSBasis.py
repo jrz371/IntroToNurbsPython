@@ -4,7 +4,7 @@ import math
 from BSplineBasis import CoxDeBoorRecursion
 from KnotVectors import OpenUniformKnotVector
 
-def NURBSBasis(i, order, Knots, t, Weights, countPoints):
+def NurbsBasis(i, order, Knots, t, Weights, countPoints):
     top = Weights[i] * CoxDeBoorRecursion(i, order, Knots, t)
 
     bottom = 0.
@@ -13,16 +13,16 @@ def NURBSBasis(i, order, Knots, t, Weights, countPoints):
 
     return top / bottom
 
-def NURBSBasisGraph(Knots, order, i, T, Weights, countPoints):
+def NurbsBasisGraph(Knots, order, i, T, Weights, countPoints):
     values = []
     for t in T:
-        values.append(NURBSBasis(i, order, Knots, t, Weights, countPoints))
+        values.append(NurbsBasis(i, order, Knots, t, Weights, countPoints))
     return np.asarray(values)
 
 if __name__ == "__main__":
-    CountPoints = 5
-    Order = 3
-    Knots = OpenUniformKnotVector(Order, CountPoints, True)
+    countPoints = 5
+    order = 3
+    Knots = OpenUniformKnotVector(order, countPoints, True)
     WeightsA = np.asarray([1, 1, 0, 1, 1])
     WeightsB = np.asarray([1, 1, 0.25, 1, 1])
     WeightsC = np.asarray([1, 1, 1, 1, 1])
@@ -30,22 +30,22 @@ if __name__ == "__main__":
 
     T = np.arange(0., 1., 0.01)
 
-    for i in range(CountPoints):
-        plt.plot(T, NURBSBasisGraph(Knots, Order, i, T, WeightsA, CountPoints))
+    for i in range(countPoints):
+        plt.plot(T, NurbsBasisGraph(Knots, order, i, T, WeightsA, countPoints))
 
     plt.show()
 
-    for i in range(CountPoints):
-        plt.plot(T, NURBSBasisGraph(Knots, Order, i, T, WeightsB, CountPoints))
+    for i in range(countPoints):
+        plt.plot(T, NurbsBasisGraph(Knots, order, i, T, WeightsB, countPoints))
 
     plt.show()
 
-    for i in range(CountPoints):
-        plt.plot(T, NURBSBasisGraph(Knots, Order, i, T, WeightsC, CountPoints))
+    for i in range(countPoints):
+        plt.plot(T, NurbsBasisGraph(Knots, order, i, T, WeightsC, countPoints))
 
     plt.show()
 
-    for i in range(CountPoints):
-        plt.plot(T, NURBSBasisGraph(Knots, Order, i, T, WeightsD, CountPoints))
+    for i in range(countPoints):
+        plt.plot(T, NurbsBasisGraph(Knots, order, i, T, WeightsD, countPoints))
 
     plt.show()

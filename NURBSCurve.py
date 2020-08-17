@@ -1,25 +1,25 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-from NURBSBasis import NURBSBasis
+from NurbsBasis import NurbsBasis
 from KnotVectors import OpenUniformKnotVector
 
-def NURBSCurve(Points, order, Knots, Weights, T):
+def NurbsCurve(Points, order, Knots, Weights, T):
     countPoints = np.size(Points, 0)
     dimension = np.size(Points, 1)
     Return = []
     for t in T:
         val = np.zeros(dimension)
         for i in range(countPoints):
-            val += Points[i, :] * NURBSBasis(i, order, Knots, t, Weights, countPoints)
+            val += Points[i, :] * NurbsBasis(i, order, Knots, t, Weights, countPoints)
         Return.append(val)
     return np.asarray(Return)
 
 if __name__ == "__main__":
     Points = np.asarray([[0, 0], [1, 2], [2.5, 0], [4, 2], [5, 0]])
-    CountPoints = np.size(Points, 0)
-    Order = 3
-    Knots = OpenUniformKnotVector(Order, CountPoints, True)
+    countPoints = np.size(Points, 0)
+    order = 3
+    Knots = OpenUniformKnotVector(order, countPoints, True)
     WeightsA = np.asarray([1, 1, 0, 1, 1])
     WeightsB = np.asarray([1, 1, 0.25, 1, 1])
     WeightsC = np.asarray([1, 1, 1, 1, 1])
@@ -27,10 +27,10 @@ if __name__ == "__main__":
 
     T = np.arange(0., 1., 0.01)
 
-    NurbsCurveA = NURBSCurve(Points, Order, Knots, WeightsA, T)
-    NurbsCurveB = NURBSCurve(Points, Order, Knots, WeightsB, T)
-    NurbsCurveC = NURBSCurve(Points, Order, Knots, WeightsC, T)
-    NurbsCurveD = NURBSCurve(Points, Order, Knots, WeightsD, T)
+    NurbsCurveA = NurbsCurve(Points, order, Knots, WeightsA, T)
+    NurbsCurveB = NurbsCurve(Points, order, Knots, WeightsB, T)
+    NurbsCurveC = NurbsCurve(Points, order, Knots, WeightsC, T)
+    NurbsCurveD = NurbsCurve(Points, order, Knots, WeightsD, T)
 
     plt.plot(Points[:, 0], Points[:, 1])
     plt.plot(NurbsCurveA[:, 0], NurbsCurveA[:, 1])
