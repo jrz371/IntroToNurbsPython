@@ -25,7 +25,7 @@ def BezierSurface(Points, UV):
                 for j in range(pointsV):
                     value += Points[i, j, :] * BernsteinBasis(n, i, uv[0]) * BernsteinBasis(m, j, uv[1])
             Out[u, v, :] = value
-    return np.transpose(Out)
+    return Out
     
 
 if __name__ == "__main__":
@@ -46,5 +46,5 @@ if __name__ == "__main__":
     fig = plt.figure()
     ax = Axes3D(fig)
     ax.plot_wireframe(Points[:, :, 0], Points[:, :, 1], Points[:, :, 2])
-    ax.plot_surface(BezierSrf[0, :, :], BezierSrf[1, :, :], BezierSrf[2, :, :])
+    ax.plot_surface(BezierSrf[:, :, 0], BezierSrf[:, :, 1], BezierSrf[:, :, 2])
     plt.show()
